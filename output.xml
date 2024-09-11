@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.12.5 on win32)" generated="2024-09-12T01:49:58.324441" rpa="false" schemaversion="5">
+<suite id="s1" name="Debug Test Cases" source="d:\Projects\automation\topicus\demoqa-robot\tests\debug_test_cases.robot">
+<test id="s1-t1" name="Verify that user can access Practice Form" line="6">
+<kw name="Open Preactice Form page" owner="practiceFormPage">
+<kw name="Open &quot;${PAGE_URL}&quot; page" owner="basePage" source_name="Open &quot;${PAGE_URL}&quot; page">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-09-12T01:49:58.623933" level="INFO">Opening browser 'Chrome' to base url 'https://demoqa.com/automation-practice-form'.</msg>
+<arg>${BASE_URL}${PAGE_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-09-12T01:49:58.623933" elapsed="15.710805"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.334738" elapsed="0.035903"/>
+</kw>
+<status status="PASS" start="2024-09-12T01:49:58.622905" elapsed="15.748736"/>
+</kw>
+<status status="PASS" start="2024-09-12T01:49:58.621907" elapsed="15.749734"/>
+</kw>
+<kw name="Input First Name with value" owner="practiceFormPage">
+<kw name="Input text to text field" owner="utils">
+<kw name="Wait until element is Visible" owner="utils">
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Element Should Be Visible" owner="SeleniumLibrary">
+<msg time="2024-09-12T01:50:14.419545" level="INFO">Element 'id:firstName' is displayed.</msg>
+<arg>${locator}</arg>
+<doc>Verifies that the element identified by ``locator`` is visible.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.376648" elapsed="0.043890"/>
+</kw>
+<arg>Element Should Be Visible</arg>
+<arg>${locator}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.376648" elapsed="0.043890"/>
+</kw>
+<arg>${RETRY}</arg>
+<arg>${INTERVAL}</arg>
+<arg>Run Keyword And Return Status</arg>
+<arg>Element Should Be Visible</arg>
+<arg>${locator}</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.375628" elapsed="0.044910"/>
+</kw>
+<arg>${locator}</arg>
+<status status="PASS" start="2024-09-12T01:50:14.373844" elapsed="0.046694"/>
+</kw>
+<kw name="Get Element by locator" owner="utils">
+<try>
+<branch type="TRY">
+<kw name="Is web element" owner="utils">
+<kw name="Is Text Contains" owner="utils">
+<kw name="Convert To String" owner="BuiltIn">
+<msg time="2024-09-12T01:50:14.423529" level="INFO">${string_variable} = id:firstName</msg>
+<var>${string_variable}</var>
+<arg>${actual}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.422539" elapsed="0.000990"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-09-12T01:50:14.423529" level="FAIL">'id:firstName' does not contain 'selenium.webdriver.remote.webelement.WebElement'</msg>
+<arg>${string_variable}</arg>
+<arg>${expected}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-09-12T01:50:14.423529" elapsed="0.001004">'id:firstName' does not contain 'selenium.webdriver.remote.webelement.WebElement'</status>
+</kw>
+<msg time="2024-09-12T01:50:14.424533" level="INFO">${status} = False</msg>
+<var>${status}</var>
+<arg>Should Contain</arg>
+<arg>${string_variable}</arg>
+<arg>${expected}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.423529" elapsed="0.001004"/>
+</kw>
+<return>
+<value>${status}</value>
+<status status="PASS" start="2024-09-12T01:50:14.424533" elapsed="0.000000"/>
+</return>
+<msg time="2024-09-12T01:50:14.425533" level="INFO">${is_web_element} = False</msg>
+<var>${is_web_element}</var>
+<arg>${locator}</arg>
+<arg>${web_element_indicator}</arg>
+<status status="PASS" start="2024-09-12T01:50:14.422539" elapsed="0.002994"/>
+</kw>
+<return>
+<value>${is_web_element}</value>
+<status status="PASS" start="2024-09-12T01:50:14.425533" elapsed="0.000000"/>
+</return>
+<msg time="2024-09-12T01:50:14.425533" level="INFO">${is_web_element} = False</msg>
+<var>${is_web_element}</var>
+<arg>${locator}</arg>
+<status status="PASS" start="2024-09-12T01:50:14.422539" elapsed="0.002994"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${is_web_element}&quot; == &quot;True&quot;">
+<return>
+<value>${locator}</value>
+<status status="NOT RUN" start="2024-09-12T01:50:14.426767" elapsed="0.000000"/>
+</return>
+<status status="NOT RUN" start="2024-09-12T01:50:14.425533" elapsed="0.001234"/>
+</branch>
+<branch type="ELSE">
+<kw name="Search and Replace double quotes by single quote" owner="utils">
+<kw name="Replace String" owner="String">
+<msg time="2024-09-12T01:50:14.427488" level="INFO">${modified_string} = id:firstName</msg>
+<var>${modified_string}</var>
+<arg>${original_string}</arg>
+<arg>"</arg>
+<arg>'</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.427488" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${modified_string}</value>
+<status status="PASS" start="2024-09-12T01:50:14.427488" elapsed="0.000000"/>
+</return>
+<msg time="2024-09-12T01:50:14.428519" level="INFO">${locator} = id:firstName</msg>
+<var>${locator}</var>
+<arg>${locator}</arg>
+<status status="PASS" start="2024-09-12T01:50:14.426767" elapsed="0.001752"/>
+</kw>
+<kw name="Is supported element locator" owner="utils">
+<for flavor="IN">
+<iter>
+<kw name="Is Text Start With" owner="utils">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-09-12T01:50:14.430516" level="INFO">${result} = True</msg>
+<var>${result}</var>
+<arg>"${actual}".startswith("${expected}")</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.429523" elapsed="0.000993"/>
+</kw>
+<return>
+<value>${result}</value>
+<status status="PASS" start="2024-09-12T01:50:14.430516" elapsed="0.000000"/>
+</return>
+<msg time="2024-09-12T01:50:14.430516" level="INFO">${is_contains} = True</msg>
+<var>${is_contains}</var>
+<arg>${Locator}</arg>
+<arg>${element}</arg>
+<doc>Return True if the actual string start with expected</doc>
+<status status="PASS" start="2024-09-12T01:50:14.429523" elapsed="0.000993"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${is_contains}&quot; == &quot;True&quot;">
+<return>
+<value>True</value>
+<status status="PASS" start="2024-09-12T01:50:14.431532" elapsed="0.000000"/>
+</return>
+<status status="PASS" start="2024-09-12T01:50:14.431532" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-09-12T01:50:14.431532" elapsed="0.000000"/>
+</if>
+<var name="${element}">id:</var>
+<status status="PASS" start="2024-09-12T01:50:14.429523" elapsed="0.002989"/>
+</iter>
+<var>${element}</var>
+<value>@{supported_locators}</value>
+<status status="PASS" start="2024-09-12T01:50:14.428519" elapsed="0.003993"/>
+</for>
+<msg time="2024-09-12T01:50:14.432732" level="INFO">${is_supported_locator} = True</msg>
+<var>${is_supported_locator}</var>
+<arg>${locator}</arg>
+<doc>Return locator value incase the selector start with commonly used locators in Robot Framework:
+id, name, xpath, css, link, class, tag, partial link, dom</doc>
+<status status="PASS" start="2024-09-12T01:50:14.428519" elapsed="0.004213"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${is_supported_locator}&quot; != &quot;None&quot;">
+<kw name="Wait until element is Visible" owner="utils">
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Element Should Be Visible" owner="SeleniumLibrary">
+<msg time="2024-09-12T01:50:14.453419" level="INFO">Element 'id:firstName' is displayed.</msg>
+<arg>${locator}</arg>
+<doc>Verifies that the element identified by ``locator`` is visible.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.434471" elapsed="0.019945"/>
+</kw>
+<arg>Element Should Be Visible</arg>
+<arg>${locator}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.434471" elapsed="0.019945"/>
+</kw>
+<arg>${RETRY}</arg>
+<arg>${INTERVAL}</arg>
+<arg>Run Keyword And Return Status</arg>
+<arg>Element Should Be Visible</arg>
+<arg>${locator}</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.433473" elapsed="0.020943"/>
+</kw>
+<arg>${locator}</arg>
+<status status="PASS" start="2024-09-12T01:50:14.433473" elapsed="0.020943"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Get WebElement" owner="SeleniumLibrary">
+<arg>${locator}</arg>
+<doc>Returns the first WebElement matching the given ``locator``.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.455413" elapsed="0.007981"/>
+</kw>
+<msg time="2024-09-12T01:50:14.463394" level="INFO">${element} = &lt;selenium.webdriver.remote.webelement.WebElement (session="0e4d52d3fb083660dfb7e6b5178dc9cb", element="f.07B9ACB83B2B7E6FD8ADCCABAEEC804E.d.177A33A561C0CF506AADD6E1FB258F97.e.29")&gt;</msg>
+<var>${element}</var>
+<arg>${RETRY}</arg>
+<arg>${INTERVAL}</arg>
+<arg>Get WebElement</arg>
+<arg>${locator}</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.454416" elapsed="0.008978"/>
+</kw>
+<return>
+<value>${element}</value>
+<status status="PASS" start="2024-09-12T01:50:14.464391" elapsed="0.000000"/>
+</return>
+<status status="PASS" start="2024-09-12T01:50:14.432732" elapsed="0.031659"/>
+</branch>
+<branch type="ELSE">
+<try>
+<branch type="TRY">
+<kw name="Get element by partial id" owner="utils">
+<var>${element}</var>
+<arg>${locator}</arg>
+<doc>User can input partial ID to locate element</doc>
+<status status="NOT RUN" start="2024-09-12T01:50:14.464391" elapsed="0.001004"/>
+</kw>
+<return>
+<value>${element}</value>
+<status status="NOT RUN" start="2024-09-12T01:50:14.465395" elapsed="0.000000"/>
+</return>
+<status status="NOT RUN" start="2024-09-12T01:50:14.464391" elapsed="0.001004"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Get element by text" owner="utils">
+<var>${element}</var>
+<arg>${locator}</arg>
+<doc>User can input partial text to locate element</doc>
+<status status="NOT RUN" start="2024-09-12T01:50:14.465395" elapsed="0.000990"/>
+</kw>
+<return>
+<value>${element}</value>
+<status status="NOT RUN" start="2024-09-12T01:50:14.466385" elapsed="0.000000"/>
+</return>
+<status status="NOT RUN" start="2024-09-12T01:50:14.465395" elapsed="0.000990"/>
+</branch>
+<status status="NOT RUN" start="2024-09-12T01:50:14.464391" elapsed="0.001994"/>
+</try>
+<status status="NOT RUN" start="2024-09-12T01:50:14.464391" elapsed="0.001994"/>
+</branch>
+<status status="PASS" start="2024-09-12T01:50:14.432732" elapsed="0.033653"/>
+</if>
+<status status="PASS" start="2024-09-12T01:50:14.426767" elapsed="0.039618"/>
+</branch>
+<status status="PASS" start="2024-09-12T01:50:14.425533" elapsed="0.040852"/>
+</if>
+<status status="PASS" start="2024-09-12T01:50:14.421544" elapsed="0.044841"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>Element with locator ${locator} not found</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-09-12T01:50:14.467381" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-09-12T01:50:14.466385" elapsed="0.000996"/>
+</branch>
+<status status="PASS" start="2024-09-12T01:50:14.421544" elapsed="0.045837"/>
+</try>
+<msg time="2024-09-12T01:50:14.467381" level="INFO">${element} = &lt;selenium.webdriver.remote.webelement.WebElement (session="0e4d52d3fb083660dfb7e6b5178dc9cb", element="f.07B9ACB83B2B7E6FD8ADCCABAEEC804E.d.177A33A561C0CF506AADD6E1FB258F97.e.29")&gt;</msg>
+<var>${element}</var>
+<arg>${locator}</arg>
+<doc>Returns the WebElement matching the given locator.
+For supported locate, using the build in keyword.
+For unsupported locate, using the custom keyword.
+Keyword will find and return a web element based on specific criteria.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.421544" elapsed="0.046835"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-09-12T01:50:14.469376" level="INFO">Typing text 'Tin' into text field '&lt;selenium.webdriver.remote.webelement.WebElement (session="0e4d52d3fb083660dfb7e6b5178dc9cb", element="f.07B9ACB83B2B7E6FD8ADCCABAEEC804E.d.177A33A561C0CF506AADD6E1FB258F97.e.29")&gt;'.</msg>
+<arg>${element}</arg>
+<arg>${text}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.468379" elapsed="0.162438"/>
+</kw>
+<arg>${RETRY}</arg>
+<arg>${INTERVAL}</arg>
+<arg>Input Text</arg>
+<arg>${element}</arg>
+<arg>${text}</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.468379" elapsed="0.162438"/>
+</kw>
+<arg>${FIRST_NAME_ELE}</arg>
+<arg>${firstName}</arg>
+<doc>Input text to the text field located by the provided locator</doc>
+<status status="PASS" start="2024-09-12T01:50:14.373633" elapsed="0.258456"/>
+</kw>
+<arg>Tin</arg>
+<status status="PASS" start="2024-09-12T01:50:14.372636" elapsed="0.259453"/>
+</kw>
+<kw name="Input First Name with value" owner="practiceFormPage">
+<kw name="Input text to text field" owner="utils">
+<kw name="Wait until element is Visible" owner="utils">
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Element Should Be Visible" owner="SeleniumLibrary">
+<msg time="2024-09-12T01:50:14.656745" level="INFO">Element 'id:firstName' is displayed.</msg>
+<arg>${locator}</arg>
+<doc>Verifies that the element identified by ``locator`` is visible.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.635802" elapsed="0.020943"/>
+</kw>
+<arg>Element Should Be Visible</arg>
+<arg>${locator}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.635802" elapsed="0.020943"/>
+</kw>
+<arg>${RETRY}</arg>
+<arg>${INTERVAL}</arg>
+<arg>Run Keyword And Return Status</arg>
+<arg>Element Should Be Visible</arg>
+<arg>${locator}</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.634805" elapsed="0.021940"/>
+</kw>
+<arg>${locator}</arg>
+<status status="PASS" start="2024-09-12T01:50:14.634805" elapsed="0.021940"/>
+</kw>
+<kw name="Get Element by locator" owner="utils">
+<try>
+<branch type="TRY">
+<kw name="Is web element" owner="utils">
+<kw name="Is Text Contains" owner="utils">
+<kw name="Convert To String" owner="BuiltIn">
+<msg time="2024-09-12T01:50:14.658740" level="INFO">${string_variable} = id:firstName</msg>
+<var>${string_variable}</var>
+<arg>${actual}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.658740" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Contain" owner="BuiltIn">
+<msg time="2024-09-12T01:50:14.659894" level="FAIL">'id:firstName' does not contain 'selenium.webdriver.remote.webelement.WebElement'</msg>
+<arg>${string_variable}</arg>
+<arg>${expected}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="FAIL" start="2024-09-12T01:50:14.658740" elapsed="0.001154">'id:firstName' does not contain 'selenium.webdriver.remote.webelement.WebElement'</status>
+</kw>
+<msg time="2024-09-12T01:50:14.659894" level="INFO">${status} = False</msg>
+<var>${status}</var>
+<arg>Should Contain</arg>
+<arg>${string_variable}</arg>
+<arg>${expected}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.658740" elapsed="0.001154"/>
+</kw>
+<return>
+<value>${status}</value>
+<status status="PASS" start="2024-09-12T01:50:14.659894" elapsed="0.000000"/>
+</return>
+<msg time="2024-09-12T01:50:14.660737" level="INFO">${is_web_element} = False</msg>
+<var>${is_web_element}</var>
+<arg>${locator}</arg>
+<arg>${web_element_indicator}</arg>
+<status status="PASS" start="2024-09-12T01:50:14.657905" elapsed="0.002832"/>
+</kw>
+<return>
+<value>${is_web_element}</value>
+<status status="PASS" start="2024-09-12T01:50:14.660737" elapsed="0.000000"/>
+</return>
+<msg time="2024-09-12T01:50:14.660737" level="INFO">${is_web_element} = False</msg>
+<var>${is_web_element}</var>
+<arg>${locator}</arg>
+<status status="PASS" start="2024-09-12T01:50:14.657905" elapsed="0.002832"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${is_web_element}&quot; == &quot;True&quot;">
+<return>
+<value>${locator}</value>
+<status status="NOT RUN" start="2024-09-12T01:50:14.661732" elapsed="0.000000"/>
+</return>
+<status status="NOT RUN" start="2024-09-12T01:50:14.661732" elapsed="0.000000"/>
+</branch>
+<branch type="ELSE">
+<kw name="Search and Replace double quotes by single quote" owner="utils">
+<kw name="Replace String" owner="String">
+<msg time="2024-09-12T01:50:14.662730" level="INFO">${modified_string} = id:firstName</msg>
+<var>${modified_string}</var>
+<arg>${original_string}</arg>
+<arg>"</arg>
+<arg>'</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.662730" elapsed="0.000998"/>
+</kw>
+<return>
+<value>${modified_string}</value>
+<status status="PASS" start="2024-09-12T01:50:14.663728" elapsed="0.000000"/>
+</return>
+<msg time="2024-09-12T01:50:14.663728" level="INFO">${locator} = id:firstName</msg>
+<var>${locator}</var>
+<arg>${locator}</arg>
+<status status="PASS" start="2024-09-12T01:50:14.662730" elapsed="0.000998"/>
+</kw>
+<kw name="Is supported element locator" owner="utils">
+<for flavor="IN">
+<iter>
+<kw name="Is Text Start With" owner="utils">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-09-12T01:50:14.665770" level="INFO">${result} = True</msg>
+<var>${result}</var>
+<arg>"${actual}".startswith("${expected}")</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.665770" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${result}</value>
+<status status="PASS" start="2024-09-12T01:50:14.665770" elapsed="0.000949"/>
+</return>
+<msg time="2024-09-12T01:50:14.666719" level="INFO">${is_contains} = True</msg>
+<var>${is_contains}</var>
+<arg>${Locator}</arg>
+<arg>${element}</arg>
+<doc>Return True if the actual string start with expected</doc>
+<status status="PASS" start="2024-09-12T01:50:14.664724" elapsed="0.001995"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${is_contains}&quot; == &quot;True&quot;">
+<return>
+<value>True</value>
+<status status="PASS" start="2024-09-12T01:50:14.666719" elapsed="0.000000"/>
+</return>
+<status status="PASS" start="2024-09-12T01:50:14.666719" elapsed="0.000998"/>
+</branch>
+<status status="PASS" start="2024-09-12T01:50:14.666719" elapsed="0.000998"/>
+</if>
+<var name="${element}">id:</var>
+<status status="PASS" start="2024-09-12T01:50:14.664724" elapsed="0.002993"/>
+</iter>
+<var>${element}</var>
+<value>@{supported_locators}</value>
+<status status="PASS" start="2024-09-12T01:50:14.664724" elapsed="0.002993"/>
+</for>
+<msg time="2024-09-12T01:50:14.667717" level="INFO">${is_supported_locator} = True</msg>
+<var>${is_supported_locator}</var>
+<arg>${locator}</arg>
+<doc>Return locator value incase the selector start with commonly used locators in Robot Framework:
+id, name, xpath, css, link, class, tag, partial link, dom</doc>
+<status status="PASS" start="2024-09-12T01:50:14.663728" elapsed="0.003989"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${is_supported_locator}&quot; != &quot;None&quot;">
+<kw name="Wait until element is Visible" owner="utils">
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Element Should Be Visible" owner="SeleniumLibrary">
+<msg time="2024-09-12T01:50:14.700630" level="INFO">Element 'id:firstName' is displayed.</msg>
+<arg>${locator}</arg>
+<doc>Verifies that the element identified by ``locator`` is visible.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.669712" elapsed="0.031914"/>
+</kw>
+<arg>Element Should Be Visible</arg>
+<arg>${locator}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.668714" elapsed="0.032912"/>
+</kw>
+<arg>${RETRY}</arg>
+<arg>${INTERVAL}</arg>
+<arg>Run Keyword And Return Status</arg>
+<arg>Element Should Be Visible</arg>
+<arg>${locator}</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.668714" elapsed="0.032912"/>
+</kw>
+<arg>${locator}</arg>
+<status status="PASS" start="2024-09-12T01:50:14.668714" elapsed="0.032912"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Get WebElement" owner="SeleniumLibrary">
+<arg>${locator}</arg>
+<doc>Returns the first WebElement matching the given ``locator``.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.702623" elapsed="0.006981"/>
+</kw>
+<msg time="2024-09-12T01:50:14.709604" level="INFO">${element} = &lt;selenium.webdriver.remote.webelement.WebElement (session="0e4d52d3fb083660dfb7e6b5178dc9cb", element="f.07B9ACB83B2B7E6FD8ADCCABAEEC804E.d.177A33A561C0CF506AADD6E1FB258F97.e.29")&gt;</msg>
+<var>${element}</var>
+<arg>${RETRY}</arg>
+<arg>${INTERVAL}</arg>
+<arg>Get WebElement</arg>
+<arg>${locator}</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.702623" elapsed="0.007979"/>
+</kw>
+<return>
+<value>${element}</value>
+<status status="PASS" start="2024-09-12T01:50:14.710602" elapsed="0.000000"/>
+</return>
+<status status="PASS" start="2024-09-12T01:50:14.667717" elapsed="0.042885"/>
+</branch>
+<branch type="ELSE">
+<try>
+<branch type="TRY">
+<kw name="Get element by partial id" owner="utils">
+<var>${element}</var>
+<arg>${locator}</arg>
+<doc>User can input partial ID to locate element</doc>
+<status status="NOT RUN" start="2024-09-12T01:50:14.710602" elapsed="0.001092"/>
+</kw>
+<return>
+<value>${element}</value>
+<status status="NOT RUN" start="2024-09-12T01:50:14.711694" elapsed="0.000000"/>
+</return>
+<status status="NOT RUN" start="2024-09-12T01:50:14.710602" elapsed="0.001092"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Get element by text" owner="utils">
+<var>${element}</var>
+<arg>${locator}</arg>
+<doc>User can input partial text to locate element</doc>
+<status status="NOT RUN" start="2024-09-12T01:50:14.712697" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${element}</value>
+<status status="NOT RUN" start="2024-09-12T01:50:14.712697" elapsed="0.000000"/>
+</return>
+<status status="NOT RUN" start="2024-09-12T01:50:14.711694" elapsed="0.001003"/>
+</branch>
+<status status="NOT RUN" start="2024-09-12T01:50:14.710602" elapsed="0.002095"/>
+</try>
+<status status="NOT RUN" start="2024-09-12T01:50:14.710602" elapsed="0.002095"/>
+</branch>
+<status status="PASS" start="2024-09-12T01:50:14.667717" elapsed="0.044980"/>
+</if>
+<status status="PASS" start="2024-09-12T01:50:14.661732" elapsed="0.050965"/>
+</branch>
+<status status="PASS" start="2024-09-12T01:50:14.661732" elapsed="0.051962"/>
+</if>
+<status status="PASS" start="2024-09-12T01:50:14.657905" elapsed="0.055789"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>Element with locator ${locator} not found</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-09-12T01:50:14.713694" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-09-12T01:50:14.713694" elapsed="0.000000"/>
+</branch>
+<status status="PASS" start="2024-09-12T01:50:14.657905" elapsed="0.056575"/>
+</try>
+<msg time="2024-09-12T01:50:14.714480" level="INFO">${element} = &lt;selenium.webdriver.remote.webelement.WebElement (session="0e4d52d3fb083660dfb7e6b5178dc9cb", element="f.07B9ACB83B2B7E6FD8ADCCABAEEC804E.d.177A33A561C0CF506AADD6E1FB258F97.e.29")&gt;</msg>
+<var>${element}</var>
+<arg>${locator}</arg>
+<doc>Returns the WebElement matching the given locator.
+For supported locate, using the build in keyword.
+For unsupported locate, using the custom keyword.
+Keyword will find and return a web element based on specific criteria.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.657742" elapsed="0.056999"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-09-12T01:50:14.715689" level="INFO">Typing text 'Nguyen' into text field '&lt;selenium.webdriver.remote.webelement.WebElement (session="0e4d52d3fb083660dfb7e6b5178dc9cb", element="f.07B9ACB83B2B7E6FD8ADCCABAEEC804E.d.177A33A561C0CF506AADD6E1FB258F97.e.29")&gt;'.</msg>
+<arg>${element}</arg>
+<arg>${text}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.714741" elapsed="0.123199"/>
+</kw>
+<arg>${RETRY}</arg>
+<arg>${INTERVAL}</arg>
+<arg>Input Text</arg>
+<arg>${element}</arg>
+<arg>${text}</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2024-09-12T01:50:14.714741" elapsed="0.123199"/>
+</kw>
+<arg>${FIRST_NAME_ELE}</arg>
+<arg>${firstName}</arg>
+<doc>Input text to the text field located by the provided locator</doc>
+<status status="PASS" start="2024-09-12T01:50:14.633808" elapsed="0.204132"/>
+</kw>
+<arg>Nguyen</arg>
+<status status="PASS" start="2024-09-12T01:50:14.632863" elapsed="0.205077"/>
+</kw>
+<kw name="Select gender value" owner="practiceFormPage">
+<try>
+<branch type="TRY">
+<if>
+<branch type="IF" condition="&quot;${gender}&quot; == &quot;Male&quot; or &quot;${gender}&quot; == &quot;Female&quot; or &quot;${gender}&quot; == &quot;Other&quot;">
+<kw name="Click on element contains text" owner="utils">
+<arg>${gender}</arg>
+<doc>Click on the element contains text</doc>
+<status status="NOT RUN" start="2024-09-12T01:50:14.839934" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-09-12T01:50:14.838937" elapsed="0.000997"/>
+</branch>
+<branch type="ELSE">
+<kw name="Fail" owner="BuiltIn">
+<msg time="2024-09-12T01:50:14.840932" level="FAIL">Not valid option</msg>
+<arg>Not valid option</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="FAIL" start="2024-09-12T01:50:14.840932" elapsed="0.000000">Not valid option</status>
+</kw>
+<status status="FAIL" start="2024-09-12T01:50:14.839934" elapsed="0.000998">Not valid option</status>
+</branch>
+<status status="FAIL" start="2024-09-12T01:50:14.838937" elapsed="0.001995">Not valid option</status>
+</if>
+<status status="FAIL" start="2024-09-12T01:50:14.838937" elapsed="0.001995">Not valid option</status>
+</branch>
+<branch type="EXCEPT">
+<pattern>message</pattern>
+<kw name="Fail" owner="BuiltIn">
+<arg>message</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-09-12T01:50:14.841929" elapsed="0.000000"/>
+</kw>
+<status status="NOT RUN" start="2024-09-12T01:50:14.841929" elapsed="0.000000"/>
+</branch>
+<status status="FAIL" start="2024-09-12T01:50:14.838937" elapsed="0.002992">Not valid option</status>
+</try>
+<arg>Other_</arg>
+<status status="FAIL" start="2024-09-12T01:50:14.838937" elapsed="0.002992">Not valid option</status>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<arg>wait for me check result</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2024-09-12T01:50:14.842925" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2024-09-12T01:49:58.621126" elapsed="16.222798">Not valid option</status>
+</test>
+<status status="FAIL" start="2024-09-12T01:49:58.329428" elapsed="16.516490"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Debug Test Cases">Debug Test Cases</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

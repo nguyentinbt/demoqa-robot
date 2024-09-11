@@ -1,0 +1,284 @@
+*** Settings ***
+Library     String
+Library     DateTime
+Library     Collections
+Library     SeleniumLibrary
+Resource    ../../configurations/config.resource
+
+
+*** Variables ***
+@{supported_locators}       id:
+...                         name:
+...                         xpath:
+...                         css:
+...                         link:
+...                         class:
+...                         tag:
+...                         partial link:
+...                         dom:
+
+${web_element_indicator}    selenium.webdriver.remote.webelement.WebElement
+
+*** Keywords ***
+Get Suite Name
+    RETURN    ${SUITE NAME}
+
+Get Test Case Name
+    RETURN    ${TEST NAME}
+
+Get Test Case key
+    ${test_case_name}=    Get Test Case Name
+    ${is_test_case_name_correct_format}=    Should Match Regexp    ${test_case_name}    .*---.*
+    ${tc_parts}=    Split String    ${test_case_name}    ---
+    ${first_part}=    Replace String    ${tc_parts}[0]    <    ${EMPTY}
+    ${last_part}=    Replace String    ${first_part}    >    ${EMPTY}
+    ${key_part}=    Strip String    ${last_part}
+    ${is_correct_key}=    Should Match Regexp    ${key_part}    GH-.*
+    IF    '${is_correct_key}' == 'None'
+        Fatal Error    Test case ID does not exist
+    ELSE
+        RETURN    ${key_part}
+    END
+
+# Stop Execution On Failure
+#    [Arguments]    ${condition}
+#    IF    ${condition} == True
+#    Run Keyword And Return From Test Case    Fail    Test failed
+#    END
+
+Get test case status
+    RETURN    ${TEST_STATUS}
+
+Get test case message
+    RETURN    ${TEST_MESSAGE}
+
+Get current date time
+    ${current_time}=    Get Current Date    result_format=%Y-%m-%d %H:%M:%S
+    Log    ${current_time}
+    RETURN    ${current_time}
+
+Set test case start time
+    ${start}=    Get Current Date
+    Set Global Variable    ${start}
+    RETURN    ${start}
+
+Set test case end time
+    ${end}=    Get Current Date
+    Set Global Variable    ${end}
+    RETURN    ${end}
+
+Get test execution elapsed
+    ${end}=    Set test case end time
+    ${elapsed_time}=    Subtract Date From Date    ${end}    ${start}
+    ${elapsed}=    Evaluate    ${elapsed_time}*1000
+    Set Global Variable    ${elapsed}
+    RETURN    ${elapsed}
+
+Get Matching String
+    [Arguments]    ${actual}    ${expected}
+    ${length}=    Set Variable    ${expected.__len__()}
+    IF    '${actual}'.startswith('${expected}')
+        ${matching_string}=    Evaluate    '${actual}'[:${length}]
+    ELSE
+        ${matching_string}=    Set Variable    ${matching_string}    ${EMPTY}
+    END
+    RETURN    ${matching_string}
+
+Is Text Start With
+    [Documentation]    Return True if the actual string start with expected
+    [Arguments]    ${actual}    ${expected}
+    ${result}=    Evaluate    "${actual}".startswith("${expected}")    # Evaluate returns a boolean value
+    RETURN    ${result}
+
+Is Text Contains
+    [Arguments]    ${actual}    ${expected}
+    ${string_variable}=    Convert To String    ${actual}
+    ${status}=    Run Keyword And Return Status    Should Contain    ${string_variable}    ${expected}
+    RETURN    ${status}
+
+Is supported element locator
+    [Documentation]    Return locator value incase the selector start with commonly used locators in Robot Framework:
+    ...    id, name, xpath, css, link, class, tag, partial link, dom
+    [Arguments]    ${Locator}
+    FOR    ${element}    IN    @{supported_locators}
+        ${is_contains}=    Is Text Start With    ${Locator}    ${element}
+        IF    "${is_contains}" == "True"    RETURN    True
+    END
+
+Search and Replace double quotes by single quote
+    [Arguments]    ${original_string}
+    ${modified_string}=    Replace String    ${original_string}    "    '
+    RETURN    ${modified_string}
+
+# ------------------- GET ELEMENT -------------------#
+
+Get element by partial id
+    [Documentation]    User can input partial ID to locate element
+    [Arguments]    ${id}
+    ${element}=    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Get WebElement    css: [id*='${id}']
+    RETURN    ${element}
+
+Get element by text
+    [Documentation]    User can input partial text to locate element
+    [Arguments]    ${text}
+    ${element}=    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Get WebElement    xpath: //*[contains(text(), '${text}')]
+    RETURN    ${element}
+
+Get Element by locator
+    [Documentation]    Returns the WebElement matching the given locator.
+    ...    For supported locate, using the build in keyword.
+    ...    For unsupported locate, using the custom keyword.
+    ...    Keyword will find and return a web element based on specific criteria.
+    [Arguments]    ${locator}
+
+    TRY
+        ${is_web_element}=    Is web element    ${locator}
+        IF    "${is_web_element}" == "True"
+            RETURN    ${locator}
+        ELSE
+            ${locator}=    Search and Replace double quotes by single quote    ${locator}
+            ${is_supported_locator}=    Is supported element locator    ${locator}
+            IF    "${is_supported_locator}" != "None"
+                Wait until element is Visible    ${locator}
+                ${element}=    Wait Until Keyword Succeeds
+                ...    ${RETRY}
+                ...    ${INTERVAL}
+                ...    Get WebElement    ${locator}
+                RETURN    ${element}
+            ELSE
+                TRY
+                    ${element}=    Get element by partial id    ${locator}
+                    RETURN    ${element}
+                EXCEPT
+                    ${element}=    Get element by text    ${locator}
+                    RETURN    ${element}
+                END
+            END
+        END
+    EXCEPT
+        Fail    Element with locator ${locator} not found
+    END
+
+# ------------------- ACTIONS -------------------#
+
+Click desired text from list
+    [Documentation]    User can click on a certain text in a list by providing the list of element locators and the text
+    [Arguments]    ${list_selector}    ${text}
+    # Wait until element is Visible    ${list_selector}
+    Wait Until Page Contains Element    ${list_selector}
+    @{elements}=    Get Webelements    ${list_selector}
+    FOR    ${element}    IN    @{elements}
+        ${element}=    Get Element by locator    ${element}
+        ${elem_text}=    Get Text    ${element}
+        IF    "${elem_text}" == "${text}"
+            Wait Until Keyword Succeeds
+            ...    ${RETRY}
+            ...    ${INTERVAL}
+            ...    Click on the web element    ${element}
+            RETURN    ${element}
+        END
+    END
+
+Click on the web element
+    [Documentation]    Click on element by provided locator with configured retry
+    [Arguments]    ${locator}
+    ${element}=    Get Element by locator    ${locator}
+    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Click Element    ${element}
+
+Click on the link text
+    [Documentation]    Click on element by provided partial link text
+    [Arguments]    ${text_link}
+    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Click Link    ${text_link}
+
+Click on element contains text
+    [Documentation]    Click on the element contains text
+    [Arguments]    ${text}
+    ${element}=    Get element by text    ${text}
+    Click on the web element    ${element}
+
+Input text to text field
+    [Documentation]    Input text to the text field located by the provided locator
+    [Arguments]    ${locator}    ${text}
+    Wait until element is Visible    ${locator}
+    ${element}=    Get Element by locator    ${locator}
+    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Input Text    ${element}    ${text}
+
+Input text to ${field} with ${value}
+    # Input Text    css=[ng-reflect-label='${field}'] input    ${value}
+    Input Text    ${field}    ${value}
+
+# Select option in dropdown menu
+#     [Documentation]    Select certain dropdown option by the provided locator and option value
+#     [Arguments]    ${locator}    ${expected_item_text}
+#     Wait Until Keyword Succeeds
+#     ...    ${RETRY}
+#     ...    ${INTERVAL}
+#     ...    Click Element    ${locator}
+#     Search and select option    ${expected_item_text}
+
+# ------------------- ASSERTIONS -------------------#
+
+Expect webelement contains text
+    [Arguments]    ${locator}    ${expected_text}
+    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Element Should Contain    ${locator}    ${expected_text}
+
+Link Should Be Clickable
+    [Arguments]    ${locator}
+
+    ${status}=    Run Keyword And Return Status
+    ...    Element Should Be Visible    ${locator}
+
+    # Check if link can be clicked
+    IF    ${status}
+        ${enabled}=    Element Should Be Enabled    ${locator}
+    ELSE
+        ${enabled}=    Set Variable    ${None}
+    END
+    RETURN    ${status} and ${enabled}
+
+Is web element
+    [Arguments]    ${locator}
+    ${is_web_element}=    Is Text Contains    ${locator}    ${web_element_indicator}
+    RETURN    ${is_web_element}
+
+# ------------------- CUSTOM WAIT -------------------#
+
+Wait until element is Visible
+    [Arguments]    ${locator}
+    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Run Keyword And Return Status    Element Should Be Visible    ${locator}
+
+# ------------------- LOGS -------------------#
+
+Stop logging info
+    Set Log Level    None
+
+Restore logging info
+    Set Log Level    INFO
+
+
+# Scroll Element Into View
+#    [Arguments]    ${element}
+#    Execute Javascript    arguments[0].scrollIntoView(true);    ${element}
+
+
