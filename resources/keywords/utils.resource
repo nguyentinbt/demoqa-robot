@@ -189,6 +189,7 @@ Click on the web element
     [Documentation]    Click on element by provided locator with configured retry
     [Arguments]    ${locator}
     ${element}=    Get Element by locator    ${locator}
+    Scroll to the center of viewport
     Wait Until Keyword Succeeds
     ...    ${RETRY}
     ...    ${INTERVAL}
@@ -222,6 +223,21 @@ Input text to ${field} with ${value}
     # Input Text    css=[ng-reflect-label='${field}'] input    ${value}
     Input Text    ${field}    ${value}
 
+Select radio button by value
+    [Arguments]    ${locator}    ${expected_value}
+    @{genders}=    Get WebElements    ${locator}
+    FOR    ${element}    IN    @{genders}
+        ${actual_value}=    Get Element Attribute    ${element}    value
+        IF    "${actual_value}" == "${expected_value}"
+            Scroll to the center of viewport
+            Click on the web element    ${locator}[value='${expected_value}'] 
+            RETURN
+        END
+    END
+
+Clear Text Field
+    [Arguments]    ${locator}
+    Clear Element Text    ${locator}
 # Select option in dropdown menu
 #     [Documentation]    Select certain dropdown option by the provided locator and option value
 #     [Arguments]    ${locator}    ${expected_item_text}
@@ -276,9 +292,17 @@ Stop logging info
 Restore logging info
     Set Log Level    INFO
 
+Scroll to  
+    [Documentation]    This keyword to scroll the visual to the inputed value
+    [Arguments]    ${horizontal}        ${vertical}
+    TRY
+        Execute Javascript    window.scrollBy(${horizontal},${vertical})
+    EXCEPT
+        Run Keyword And Continue On Failure    Fail    Couldn't scroll to the provided value
+    END
 
-# Scroll Element Into View
-#    [Arguments]    ${element}
-#    Execute Javascript    arguments[0].scrollIntoView(true);    ${element}
-
+Scroll to the center of viewport 
+    [Documentation]    This keyword to scroll the visual to the inputed value
+    ${window_height}=    Execute JavaScript    return window.innerHeight / 2;
+    Scroll to    0    ${window_height}    
 
