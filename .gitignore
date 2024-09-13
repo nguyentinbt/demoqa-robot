@@ -1,0 +1,51 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Robot Framework logs and output
+output.xml
+log.html
+report.html
+debug.log
+selenium-screenshot*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Python-specific logs
+*.log
+*.coverage
+.coverage.*
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.idea/
+*.iml
+.vscode/
+
+# Pipenv files
+Pipfile.lock
+Pipfile
+
+# Robot Framework temp data and results
+*.pabotsuitenames
+*.pabotresults/
+results/
+
+# Test artifacts
+*.roboterrors
+*.xml
+*.html
+screenshots/

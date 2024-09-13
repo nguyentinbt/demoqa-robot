@@ -3,6 +3,7 @@ Library     String
 Library     DateTime
 Library     Collections
 Library     SeleniumLibrary
+Library     utilities.py
 Resource    ../../configurations/config.resource
 
 
@@ -238,6 +239,7 @@ Select radio button by value
 Clear Text Field
     [Arguments]    ${locator}
     Clear Element Text    ${locator}
+
 # Select option in dropdown menu
 #     [Documentation]    Select certain dropdown option by the provided locator and option value
 #     [Arguments]    ${locator}    ${expected_item_text}
@@ -306,3 +308,33 @@ Scroll to the center of viewport
     ${window_height}=    Execute JavaScript    return window.innerHeight / 2;
     Scroll to    0    ${window_height}    
 
+Get year from date string
+    [Arguments]    ${string_date}
+    ${day}=    Get Day From String    ${string_date}
+    ${month}=    Get Month From String    ${string_date}
+    ${year}=    Get Year From String    ${string_date}
+    RETURN    ${year}
+
+Get month from date string
+    [Arguments]    ${string_date}
+    ${month}=    Get Month From String    ${string_date}
+    RETURN    ${month}    
+
+Get day from date string
+    [Arguments]    ${string_date}
+     ${day}=    Get Day From String    ${string_date}
+    RETURN    ${day}    
+
+Convert String To Array
+    [Arguments]    ${string}
+    ${array}=    Split String    ${string}    ,
+    RETURN    ${array}
+
+Press Enter key
+    [Arguments]    ${locator}
+    Press Key    ${locator}    \\13
+   
+Press ESC key
+    Press Keys    NONE    ESC
+    
+    
