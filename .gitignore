@@ -16,7 +16,7 @@ debug.log
 selenium-screenshot*.png
 *.jpg
 *.jpeg
-*.gif
+
 
 # Python-specific logs
 *.log
