@@ -4,6 +4,7 @@ Library     DateTime
 Library     Collections
 Library     SeleniumLibrary
 Library     utilities.py
+Resource    ../testData/css_style_index.resource
 Resource    ../../configurations/config.resource
 
 
@@ -118,7 +119,7 @@ Get element by partial id
     [Arguments]    ${id}
     ${element}=    Wait Until Keyword Succeeds
     ...    ${RETRY}
-    ...    ${INTERVAL}
+    ...    ${INTERVAL_SHORT}
     ...    Get WebElement    css: [id*='${id}']
     RETURN    ${element}
 
@@ -127,7 +128,7 @@ Get element by text
     [Arguments]    ${text}
     ${element}=    Wait Until Keyword Succeeds
     ...    ${RETRY}
-    ...    ${INTERVAL}
+    ...    ${INTERVAL_SHORT}
     ...    Get WebElement    xpath: //*[contains(text(), '${text}')]
     RETURN    ${element}
 
@@ -146,10 +147,10 @@ Get Element by locator
             ${locator}=    Search and Replace double quotes by single quote    ${locator}
             ${is_supported_locator}=    Is supported element locator    ${locator}
             IF    "${is_supported_locator}" != "None"
-                Wait until element is Visible    ${locator}
+                Wait until expected element is Visible    ${locator}
                 ${element}=    Wait Until Keyword Succeeds
                 ...    ${RETRY}
-                ...    ${INTERVAL}
+                ...    ${INTERVAL_SHORT}
                 ...    Get WebElement    ${locator}
                 RETURN    ${element}
             ELSE
@@ -180,7 +181,7 @@ Click desired text from list
         IF    "${elem_text}" == "${text}"
             Wait Until Keyword Succeeds
             ...    ${RETRY}
-            ...    ${INTERVAL}
+            ...    ${INTERVAL_SHORT}
             ...    Click on the web element    ${element}
             RETURN    ${element}
         END
@@ -190,10 +191,10 @@ Click on the web element
     [Documentation]    Click on element by provided locator with configured retry
     [Arguments]    ${locator}
     ${element}=    Get Element by locator    ${locator}
-    Scroll to the center of viewport
+    Scroll to the center of viewport    ${locator}
     Wait Until Keyword Succeeds
     ...    ${RETRY}
-    ...    ${INTERVAL}
+    ...    ${INTERVAL_SHORT}
     ...    Click Element    ${element}
 
 Click on the link text
@@ -201,7 +202,7 @@ Click on the link text
     [Arguments]    ${text_link}
     Wait Until Keyword Succeeds
     ...    ${RETRY}
-    ...    ${INTERVAL}
+    ...    ${INTERVAL_SHORT}
     ...    Click Link    ${text_link}
 
 Click on element contains text
@@ -213,11 +214,11 @@ Click on element contains text
 Input text to text field
     [Documentation]    Input text to the text field located by the provided locator
     [Arguments]    ${locator}    ${text}
-    Wait until element is Visible    ${locator}
+    Wait until expected element is Visible    ${locator}
     ${element}=    Get Element by locator    ${locator}
     Wait Until Keyword Succeeds
     ...    ${RETRY}
-    ...    ${INTERVAL}
+    ...    ${INTERVAL_SHORT}
     ...    Input Text    ${element}    ${text}
 
 Input text to ${field} with ${value}
@@ -230,7 +231,7 @@ Select radio button by value
     FOR    ${element}    IN    @{genders}
         ${actual_value}=    Get Element Attribute    ${element}    value
         IF    "${actual_value}" == "${expected_value}"
-            Scroll to the center of viewport
+            Scroll to the center of viewport    ${locator}
             Click on the web element    ${locator}[value='${expected_value}'] 
             RETURN
         END
@@ -245,7 +246,7 @@ Clear Text Field
 #     [Arguments]    ${locator}    ${expected_item_text}
 #     Wait Until Keyword Succeeds
 #     ...    ${RETRY}
-#     ...    ${INTERVAL}
+#     ...    ${INTERVAL_SHORT}
 #     ...    Click Element    ${locator}
 #     Search and select option    ${expected_item_text}
 
@@ -255,7 +256,7 @@ Expect webelement contains text
     [Arguments]    ${locator}    ${expected_text}
     Wait Until Keyword Succeeds
     ...    ${RETRY}
-    ...    ${INTERVAL}
+    ...    ${INTERVAL_SHORT}
     ...    Element Should Contain    ${locator}    ${expected_text}
 
 Link Should Be Clickable
@@ -279,11 +280,11 @@ Is web element
 
 # ------------------- CUSTOM WAIT -------------------#
 
-Wait until element is Visible
+Wait until expected element is Visible
     [Arguments]    ${locator}
     Wait Until Keyword Succeeds
     ...    ${RETRY}
-    ...    ${INTERVAL}
+    ...    ${INTERVAL_SHORT}
     ...    Run Keyword And Return Status    Element Should Be Visible    ${locator}
 
 # ------------------- LOGS -------------------#
@@ -304,9 +305,47 @@ Scroll to
     END
 
 Scroll to the center of viewport 
-    [Documentation]    This keyword to scroll the visual to the inputed value
-    ${window_height}=    Execute JavaScript    return window.innerHeight / 2;
-    Scroll to    0    ${window_height}    
+    [Arguments]    ${locator}
+    [Documentation]    This keyword to scroll the visual to the inputed value. support CSS selector syntax until now
+    TRY
+        ${is_web_element}=    Is web element    ${locator}
+        IF    "${is_web_element}" == "True"
+            ${window_height}=    Execute JavaScript    return window.innerHeight / 2;
+            Scroll to    0    ${window_height}
+            Sleep    ${INTERVAL_SHORT}
+            Wait until expected element is Visible    ${locator} 
+        ELSE
+            ${is_contains}=    Is Text Start With    ${locator}    css
+            IF    "${is_contains}" == "True"
+                ${querySelector}=    Replace String    ${locator}    css:          ${EMPTY} 
+                ${SCROLL_SCRIPT}=     Set Variable    document.querySelector("${querySelector}").scrollIntoView({ behavior: 'smooth', block: 'center' });
+                Execute Javascript    ${SCROLL_SCRIPT}  
+                Sleep    ${INTERVAL_SHORT}
+                Wait until expected element is Visible    ${locator} 
+            END             
+        END    
+    EXCEPT    
+        Run Keyword And Continue On Failure    Fail    not supported selecttor
+    END
+
+
+Is field highlighted
+    [Arguments]    ${locator}
+    TRY
+        Scroll to the center of viewport    ${locator}
+        ${is_contains}=    Is Text Start With    ${locator}    css
+        IF    "${is_contains}" == "True"
+            ${querySelector}=    Replace String    ${locator}    css:          ${EMPTY} 
+            ${SCROLL_SCRIPT}=     Set Variable    return window.getComputedStyle(document.querySelector("${querySelector}")).borderColor;
+            ${border_color}=    Execute Javascript    ${SCROLL_SCRIPT}  
+            IF    "${border_color}" == "${RED}"
+                RETURN    ${True}
+            END
+        END             
+    EXCEPT    
+        Run Keyword And Continue On Failure    Fail    not supported selector
+    END
+
 
 Get year from date string
     [Arguments]    ${string_date}
@@ -337,4 +376,17 @@ Press Enter key
 Press ESC key
     Press Keys    NONE    ESC
     
-    
+Test Suite Setup
+    # Create test cycle at folder    Smoke Testing
+    Log    This is suite setup
+
+Test Suite Teardown
+    # Delete All Sessions
+    Log    Suite Teardown
+
+Test case Setup
+    Set test case start time
+
+Test case Teardown
+    Close Browser
+    # Update test case result to Zephyr Scale    

@@ -22,4 +22,6 @@ ${NORMAL PASSWORD}      Robot@123456
 ${BROWSER}              Chrome
 ${DELAY}                0
 ${RETRY}                3x
-${INTERVAL}             5s
+${INTERVAL_SHORT}             2s
+${INTERVAL_MEDIUM}             5s
+${INTERVAL_LONG}             10s
