@@ -24,30 +24,24 @@ Clone Repository
 
 This guide will help you set up Python, Robot Framework, and the Selenium library for testing automation.
 
-#### Prerequisites
-
-Make sure you have Python 3.6 or later installed on your machine. You can download it from [Python's official website](https://www.python.org/downloads/).
-
-# Python Setup Guide
-
 This guide will walk you through installing and setting up Python on your system.
 
-## Prerequisites
+### Prerequisites
 
 Ensure that the following are available on your system:
 
 - **Operating System**: Windows, macOS, or Linux
 - **Administrator Access**: Required to install and configure Python
 
-## Steps to Install Python
+### Steps to Install Python
 
-### 1. Download Python
+#### 1. Download Python
 
-Visit the [official Python website](https://www.python.org/downloads/) to download the latest version of Python. Choose the version suitable for your operating system (Windows, macOS, Linux).
+Make sure you have Python 3.6 or later installed on your machine.. Visit the [official Python website](https://www.python.org/downloads/) to download the latest version of Python. Choose the version suitable for your operating system (Windows, macOS, Linux).
 
-### 2. Install Python
+#### 2. Install Python
 
-#### Windows:
+##### Windows:
 
 1. Run the downloaded installer.
 2. **Important:** Check the box that says "Add Python to PATH".
@@ -120,49 +114,16 @@ robot --outputdir results tests/
 ```ini {"id":"01J7V7R99JVJ4XMX440G857VAS"}
 ├───.github
 ├───.vscode
-├───src
-|   ├───api (api test and configs)
-|   ├───mobile (mobiel test and configs)
-|   └───web
-|       ├───config (wdio config files)
-|       ├───executables
-|       ├───generator
-|       ├───pages
-|       ├───resources
-|       ├───static
-|       ├───tests
-|       │     ├───cucumber
-|       │     └───mocha
-|       ├───types
-|       └───Utils
-|
-├───.env
+├───configurations
+├───resources
+|   |───keywords
+|   ├───page_object
+|   ├───pages
+|   └───test_data
+├───results
+├───tests
 ├───.gitignore
-├───docker-compose.yml
-├───LICENSE
-├───package-lock.json
-├───package.json
-├───README.md
-├───runner.ts
-└───tsconfig.json
+└───README.md
+
 
 ```
-
-### Manage browser driver:
-
-Usually inside corporate network exe files download from external sites are blocked.
-When we try to download the drivers it might fail, in that case we can maintain drivers
-locally and install as custom path.
-
-```bash {"id":"01J7V7R99JVJ4XMX440JGC6QJC"}
-Download the latest driver from 'https://chromedriver.chromium.org/downloads'
-Place the the 'chromedriver_win32.zip' file inside src/executables/drivers
-execute 'installchromedriver.bat' file to dowload the driver from placed folder
-
-```
-
-### Sample Report
-
-![SampleReports](https://github.com/nguyentinbt/demoqa-robot/blob/main/resources/data/Sample_report.png)
-
-### Sample Email
