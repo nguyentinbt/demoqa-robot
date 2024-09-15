@@ -163,4 +163,6 @@ execute 'installchromedriver.bat' file to dowload the driver from placed folder
 
 ### Sample Report
 
+![SampleReports](https://github.com/nguyentinbt/demoqa-robot/blob/main/resources/data/Sample_report.png)
+
 ### Sample Email
