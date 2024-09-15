@@ -101,59 +101,19 @@ pip install --upgrade robotframework-seleniumlibrary
 robot --outputdir results tests/
 ```
 
-#### Generate Report
-
-```sh {"id":"01J7V7R99JVJ4XMX4407CG967T"}
-npm run report:mocha
-npm run report:cucumber
-npm run report-mobile
-
-```
-
-Report Paths:
-
-```sh {"id":"01J7V7R99JVJ4XMX4409TMG52G"}
-mocha: mochawesome-report/mochawesome-report.html
-cucumber: reports/cucumber/cucumber-report.html
-api: reports/api/mochawesome.html
-mobile: reports/mobile/mobile.html
-
-```
-
-#### Send Report
-
-```sh {"id":"01J7V7R99JVJ4XMX440DBDPSG0"}
-update .env file with Sender email, password and recipients email list
-npm run mailCucumberReport
-
-```
-
 ### Features:
 
-    - Web, Mobile and API Testing
-    - Mocha and Cucumber BDD framework
+    - Web Testing
+    - Robot framework
     - Page Object Design pattern
-    - Docker integration
-    - Parallel execution
-    - Cross browser testing
-    - Retry failed test
     - Screenshot in report for failed tests
-    - Download chromedriver from local path
     - Github actions
-    - Send test report to list of Gmail
 
 ### Tech stacks:
 
-[![WebdriverIO](https://img.shields.io/badge/-WebdriverI/O-EA5906?logo=WebdriverIO&logoColor=white)](https://webdriver.io/)
-[![TypeScript](https://img.shields.io/badge/-TypeScript-%233178C6?logo=Typescript&logoColor=black)](https://www.typescriptlang.org/)
-[![Mocha](https://img.shields.io/badge/-Mocha-%238D6748?logo=Mocha&logoColor=white)](https://mochajs.org/)
-[![CucumberIO](https://img.shields.io/badge/-Cucumber.io-brightgreen?logo=cucumber&logoColor=white)](https://cucumber.io/)
-[![ChaiJS](https://img.shields.io/badge/-ChaiJS-FEDABD?logo=Chai&logoColor=black)](https://www.chaijs.com/)
-[![SuperTest](https://img.shields.io/badge/-SuperTest-07BA82?logoColor=white)](https://github.com/visionmedia/supertest)
-[![Enquirer](https://img.shields.io/badge/-Enquirer-f0db4f?logoColor=white)](https://github.com/enquirer/enquirer)
-[![Docker](https://img.shields.io/badge/-Docker-0db7ed?logo=docker&logoColor=white)](https://www.docker.com/)
-[![Appium](https://img.shields.io/badge/-Appium-662d91?logo=appium&logoColor=black)](https://github.com/appium/appium)
-[![Node-Mailer](https://img.shields.io/badge/-Node%20Mailer-89D05C?logo=gmail&logoColor=blue)](https://github.com/nodemailer/nodemailer)
+    - https://www.python.org/
+    - https://docs.robotframework.org
+    - https://robotframework.org/SeleniumLibrary/SeleniumLibrary.html
 
 ### Folder Structure:
 
@@ -203,11 +163,4 @@ execute 'installchromedriver.bat' file to dowload the driver from placed folder
 
 ### Sample Report
 
-![SampleReports](https://user-images.githubusercontent.com/65847528/144699948-507b314e-9639-450c-b127-fb9b0721a2d8.gif)
-
 ### Sample Email
-
-<img src="https://user-images.githubusercontent.com/94898700/168330995-09d88ed8-f916-493f-a43b-19b6ca58df0b.png" alt="sample report" width="400"/>
-<!-- ![sample_email](https://user-images.githubusercontent.com/94898700/168330995-09d88ed8-f916-493f-a43b-19b6ca58df0b.png) -->
-
-# WebdriverIOE2E
