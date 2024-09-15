@@ -19,7 +19,7 @@ ${MONTH_ELE}                           css:.react-datepicker__month-select
 ${DAY_ELE}                             css:.react-datepicker__day:not(.react-datepicker__day--outside-month)
 ${HOBBIES_ELE}                         css:#hobbiesWrapper label
 ${ADDRESS_ELE}                         css:#currentAddress
-${FILE_PATH_ELE}                       ${CURDIR}/../testData/
+${FILE_PATH_ELE}                       ${CURDIR}/../test_data/
 ${STATE_ELE}                           css:#state input
 ${CITY_ELE}                            css:#city input
 ${SUBMIT_BTN}                          css:button#submit
@@ -27,6 +27,7 @@ ${CONFIRMATION_POPUP_ELE}              css:#example-modal-sizes-title-lg
 ${CONFIRMATION_POPUP_CONTENT_ELE}      css:.table-responsive
 ${SUBJECT_SUGGESTION_ELE}              css:.subjects-auto-complete__menu
 ${PHONE_BORDER_COLOR_SCRIPT}           return window.getComputedStyle(document.querySelector('#userNumber')).borderColor;
+${UPLOAD_PICTURE_BTN}                  css:#uploadPicture
 
 *** Keywords ***
 Open Preactice Form page 
@@ -134,7 +135,7 @@ Select Picture
     [Arguments]    ${file_name}
     ${path}=    Set Variable    ${FILE_PATH_ELE}/${file_name}
     ${normalized_path}=    OperatingSystem.Normalize Path    ${path}
-    Choose File    css:#uploadPicture    ${normalized_path}
+    Choose File    ${UPLOAD_PICTURE_BTN}     ${normalized_path}
 
 Input Current Address with value
     [Arguments]    ${address}
