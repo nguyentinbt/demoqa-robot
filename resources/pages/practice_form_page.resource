@@ -2,7 +2,7 @@
 Resource    base_page.resource
 Library     ../keywords/utilities.py
 Resource    ../../configurations/config.resource
-Resource    ../testData/css_style_index.resource
+Resource    ../test_data/css_style_index.resource
 Resource    ../../resources/keywords/utils.resource
 
 *** Variables ***

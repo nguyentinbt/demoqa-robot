@@ -4,7 +4,7 @@ Library     DateTime
 Library     Collections
 Library     SeleniumLibrary
 Library     utilities.py
-Resource    ../testData/css_style_index.resource
+Resource    ../test_data/css_style_index.resource
 Resource    ../../configurations/config.resource
 
 
